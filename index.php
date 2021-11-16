@@ -27,6 +27,15 @@ function plunder($resources) {
             return -1;
         }
     }
+    // случай маленьких величин
+    foreach ($resources as $elem) {
+        if (array_sum($resources) > $army_load && $elem == $army_load) {
+            array_push($result, $elem);
+            echo "[ ".$result[0]." ]";
+            return 11;
+        }
+    }
+
     // случай, когда массив оказался нулевой длины или грузоподъемность равна нулю
     if (count($resources) == 0 || $army_load == 0) {
         echo "Одно из значений не может быть нулевым";
@@ -41,6 +50,12 @@ function plunder($resources) {
             array_push($result, $resources[0]);
         }
         //return 1;
+    }
+    // случай, когда сумма всех ресурсов не превышает групоподъемности
+    elseif (array_sum($resources) <= $army_load) {
+        foreach ($resources as $elem) {
+            array_push($result, $elem);
+        }
     }
     else {
         $ratio = $army_load / array_sum($resources); // вычисляем коэффициент
