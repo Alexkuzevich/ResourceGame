@@ -14,7 +14,8 @@ for ($i = 0; $i < $count; $i++) {
 echo "\nКакова грузоподъемность армии?\n";
 $army_load = (int)readline();
 
-function plunder($resources) {
+function plunder($resources)
+{
 
     /* передал перменные грузоподъемности и массива
      * с будущим результатом набега, объявленные глобально */
@@ -31,7 +32,7 @@ function plunder($resources) {
     foreach ($resources as $elem) {
         if (array_sum($resources) > $army_load && $elem == $army_load) {
             array_push($result, $elem);
-            echo "[ ".$result[0]." ]";
+            echo "[ " . $result[0] . " ]";
             return 11;
         }
     }
@@ -40,24 +41,20 @@ function plunder($resources) {
     if (count($resources) == 0 || $army_load == 0) {
         echo "Одно из значений не может быть нулевым";
         return 0;
-    }
-    // случай, когда в деревне всего один ресурс
+    } // случай, когда в деревне всего один ресурс
     elseif (count($resources) == 1) {
         if ($resources[0] >= $army_load) {
             array_push($result, $army_load);
-        }
-        else {
+        } else {
             array_push($result, $resources[0]);
         }
         //return 1;
-    }
-    // случай, когда сумма всех ресурсов не превышает групоподъемности
+    } // случай, когда сумма всех ресурсов не превышает групоподъемности
     elseif (array_sum($resources) <= $army_load) {
         foreach ($resources as $elem) {
             array_push($result, $elem);
         }
-    }
-    else {
+    } else {
         $ratio = $army_load / array_sum($resources); // вычисляем коэффициент
         foreach ($resources as $elem) {
             array_push($result, (int)($elem * $ratio)); // кол-во награбленного = изначальное кол-во * коэф
@@ -66,8 +63,10 @@ function plunder($resources) {
 
     // распределение остатка
     $left = $army_load - array_sum($result);
-    for($i = 0; $i < $left; $i++) {
-        $result[$i] += 1;
+    if ($army_load < array_sum($resources)) {
+        for ($i = 0; $i < $left; $i++) {
+            $result[$i] += 1;
+        }
     }
 
 
