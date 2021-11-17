@@ -64,6 +64,13 @@ function plunder($resources) {
         }
     }
 
+    // распределение остатка
+    $left = $army_load - array_sum($result);
+    for($i = 0; $i < $left; $i++) {
+        $result[$i] += 1;
+    }
+
+
     // проверяем, что количество награбленных ресурсов не превосходит грузоподъемности и выводим результат
     if (array_sum($result) <= $army_load) {
         echo "[ ";
